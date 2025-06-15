@@ -252,6 +252,7 @@ function handleAnswer(e) {
         updateSpriteByHP("player", playerHP);
 
         // virus attack
+        enemy.src = "./assets/enemy/virus1/normal.png";
         enemyAttackEffect.style.display = "block";
         enemyAttackEffect.style.animation = "none";
         enemyAttackEffect.offsetHeight;
