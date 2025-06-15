@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Quiz Battle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="overlay"></div>
+
+  <div id="introDialogue">
+    <div class="dialogue-top">
+      <div class="avatar">
+        <img src="./assets/avatar/doctor.png" alt="Avatar" />
+      </div>
+      <div class="speech-bubble">
+        Chào bạn! Chúng ta sắp bước vào trận chiến chống lại virus COVID-19.
+        Hãy trả lời đúng các câu hỏi để tiêu diệt kẻ địch. Sẵn sàng chưa?
+      </div>
+    </div>
+    <button id="startButton">Bắt đầu</button>
+  </div>
+
+  <div id="game-container">
+    <div class="top-hp-bar">
+      <div class="hp-bar-group">
+        <label><span style="color: gold;">🌟 Player</span></label>
+        <div class="hp-bar-bg"><div id="playerHP" class="hp-bar"></div></div>
+      </div>
+      <div class="hp-bar-group">
+        <label><span style="color: lime;">☠️ Enemy</span></label>
+        <div class="hp-bar-bg"><div id="enemyHP" class="hp-bar"></div></div>
+      </div>
+    </div>
+
+    <div class="battlefield">
+      <div id="player" class="character">
+        <img id="player-sprite" src="./assets/player/normal.png" alt="Player" />
+      </div>
+      <div id="enemy" class="virus floating">
+        <img id="enemy-sprite" src="./assets/enemy/virus1/normal.png" alt="Enemy" />
+      </div>
+
+      <!-- Player's attack effect -->
+      <img id="attackEffect" src="./assets/effects/attack.png" alt="Attack" />
+
+      <!-- Virus attack effect (NEW) -->
+      <img id="enemyAttackEffect" src="./assets/effects/virus-attack.png" alt="Virus Attack" />
+    </div>
+
+    <div id="dialogueBox">
+      <div class="dialogue-top">
+        <div class="avatar">
+          <img id="avatar-img" src="./assets/avatar/doctor.png" alt="Avatar" />
+        </div>
+        <div class="speech-bubble" id="question">Loading...</div>
+      </div>
+      <div id="answers">
+        <button class="answer-buttons">A</button>
+        <button class="answer-buttons">B</button>
+        <button class="answer-buttons">C</button>
+        <button class="answer-buttons">D</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="gameOverScreen" style="display: none;">
+    <div class="end-message">Game Over!</div>
+    <button id="restartButton">Chơi lại</button>
+  </div>
+
+  <div id="winScreen" style="display: none;">
+    <div class="end-message">Bạn đã chiến thắng!</div>
+    <button id="restartButtonWin">Chơi lại</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
