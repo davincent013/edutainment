@@ -14,8 +14,10 @@ const gameOverScreen = document.getElementById("gameOverScreen");
 const winScreen = document.getElementById("winScreen");
 
 let currentQuestionIndex = 0;
-let playerHP = 75;
-let enemyHP = 50;
+let playerHP_MAX = 75;
+let enemyHP_MAX = 50;
+let playerHP = playerHP_MAX;
+let enemyHP = enemyHP_MAX;
 
 const questions = [
   {
@@ -174,9 +176,9 @@ function updateSpriteByHP(target, hp) {
   if (target === "player") {
     if (hp <= 0) {
       player.src = "./assets/player/dead.png";
-    } else if (hp <= hp*0.5) {
+    } else if (hp <= playerHP_MAX*0.5) {
       player.src = "./assets/player/critical.png";
-    } else if (hp <= hp*0.75) {
+    } else if (hp <= playerHP_MAX*0.75) {
       player.src = "./assets/player/weakened.png";
     } else {
       player.src = "./assets/player/normal.png";
@@ -184,9 +186,9 @@ function updateSpriteByHP(target, hp) {
   } else if (target === "enemy") {
     if (hp <= 0) {
       enemySprite.src = "./assets/enemy/virus1/dead.png";
-    } else if (hp <= hp*0.5) {
+    } else if (hp <= enemyHP_MAX *0.5) {
       enemySprite.src = "./assets/enemy/virus1/critical.png";
-    } else if (hp <= hp*0.75) {
+    } else if (hp <= enemyHP_MAX*0.75) {
       enemySprite.src = "./assets/enemy/virus1/weakened.png";
     } else {
       enemySprite.src = "./assets/enemy/virus1/normal.png";
@@ -231,7 +233,7 @@ function handleAnswer(e) {
     setTimeout(() => {
       if (selected === current.correct) {
         enemyHP = Math.max(0, enemyHP - 5);
-        updateHPBar(enemyHPBar, enemyHP);
+        updateHPBar(enemyHPBar, enemyHP, enemyHP_MAX);
         updateSpriteByHP("enemy", enemyHP);
 
         player.src = "./assets/player/attack.png";
@@ -248,7 +250,7 @@ function handleAnswer(e) {
         }, 800);
       } else {
         playerHP = Math.max(0, playerHP - 5);
-        updateHPBar(playerHPBar, playerHP);
+        updateHPBar(playerHPBar,playerHP ,playerHP_MAX);
         updateSpriteByHP("player", playerHP);
 
         // virus attack
@@ -286,8 +288,8 @@ function handleAnswer(e) {
   }, 1000);
 }
 
-function updateHPBar(bar, hp) {
-  bar.style.width = `${(hp / 75) * 100}%`;
+function updateHPBar(bar, hp, maxHP) {
+  bar.style.width = `${(hp / maxHP) * 100}%`;
 }
 
 function nextQuestion() {
@@ -296,12 +298,12 @@ function nextQuestion() {
 }
 
 function restartGame() {
-  playerHP = 15;
-  enemyHP = 15;
+  playerHP = playerHP_MAX;
+  enemyHP = playerHP_MAX;
   currentQuestionIndex = 0;
 
-  updateHPBar(playerHPBar, playerHP);
-  updateHPBar(enemyHPBar, enemyHP);
+  updateHPBar(playerHPBar, playerHP, playerHP_MAX);
+  updateHPBar(enemyHPBar, enemyHP, playerHP_MAX);
   updateSpriteByHP("player", playerHP);
   updateSpriteByHP("enemy", enemyHP);
 
@@ -324,6 +326,13 @@ startButton.addEventListener("click", () => {
   introDialogue.style.display = "none";
   displayQuestion(); // show first question
 });
+const chatScript = [
+  { speaker: "doctor-chat", text: "Chào bạn! Chúng ta sắp đối đầu với virus COVID-19." },
+  { speaker: "virus-chat", text: "Haha! Các người không thể đánh bại ta đâu!" },
+  { speaker: "doctor-chat", text: "Tôi sẽ cùng bạn trả lời các câu hỏi để tiêu diệt nó!" },
+  { speaker: "virus-chat", text: "Cứ thử xem! Ta đã sẵn sàng rồi!" },
+  { speaker: "doctor-chat", text: "Bạn đã sẵn sàng chưa? Nhấn tiếp tục để bắt đầu!" }
+];
 
 
 const fullIntro = [
@@ -351,8 +360,8 @@ function showNextIntroLine() {
 }
 
 window.onload = () => {
-  updateHPBar(playerHPBar, playerHP);
-  updateHPBar(enemyHPBar, enemyHP);
+  updateHPBar(playerHPBar, playerHP, playerHP_MAX);
+  updateHPBar(enemyHPBar, enemyHP, enemyHP_MAX);
   updateSpriteByHP("player", playerHP);
   updateSpriteByHP("enemy", enemyHP);
 
